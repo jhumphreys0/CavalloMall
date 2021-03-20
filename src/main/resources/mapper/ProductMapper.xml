@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team6project.cavallo_mall.dao.ProductMapper">
+  <resultMap id="BaseResultMap" type="com.team6project.cavallo_mall.pojo.Product">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="category_id" jdbcType="INTEGER" property="categoryId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="subtitle" jdbcType="VARCHAR" property="subtitle" />
+    <result column="quantity_sold" jdbcType="INTEGER" property="quantitySold" />
+    <result column="main_image" jdbcType="VARCHAR" property="mainImage" />
+    <result column="specification" jdbcType="VARCHAR" property="specification" />
+    <result column="detail" jdbcType="VARCHAR" property="detail" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <resultMap id="ProductStatisticMap" type="com.team6project.cavallo_mall.vo.ProductSalesStatisticVo">
+    <id column="category_id" jdbcType="INTEGER" property="categoryId"/>
+    <result column="sum(quantity_sold)" property="quantitySoldSum" jdbcType="INTEGER"/>
+    <result column="name" property="productName" jdbcType="VARCHAR"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, category_id, name, subtitle, quantity_sold, main_image, specification, detail, 
+    price, status, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from product
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from product
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.team6project.cavallo_mall.pojo.Product" useGeneratedKeys="true" keyProperty="id">
+    insert into product (id, category_id, name, 
+      subtitle, quantity_sold, main_image, 
+      specification, detail, price, 
+      status, create_time, update_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{categoryId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{subtitle,jdbcType=VARCHAR}, #{quantitySold,jdbcType=INTEGER}, #{mainImage,jdbcType=VARCHAR}, 
+      #{specification,jdbcType=VARCHAR}, #{detail,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, 
+      #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.team6project.cavallo_mall.pojo.Product" useGeneratedKeys="true" keyProperty="id">
+    insert into product
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="categoryId != null">
+        category_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="subtitle != null">
+        subtitle,
+      </if>
+      <if test="quantitySold != null">
+        quantity_sold,
+      </if>
+      <if test="mainImage != null">
+        main_image,
+      </if>
+      <if test="specification != null">
+        specification,
+      </if>
+      <if test="detail != null">
+        detail,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="categoryId != null">
+        #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="subtitle != null">
+        #{subtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="quantitySold != null">
+        #{quantitySold,jdbcType=INTEGER},
+      </if>
+      <if test="mainImage != null">
+        #{mainImage,jdbcType=VARCHAR},
+      </if>
+      <if test="specification != null">
+        #{specification,jdbcType=VARCHAR},
+      </if>
+      <if test="detail != null">
+        #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.team6project.cavallo_mall.pojo.Product">
+    update product
+    <set>
+      <if test="categoryId != null">
+        category_id = #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="subtitle != null">
+        subtitle = #{subtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="quantitySold != null">
+        quantity_sold = #{quantitySold,jdbcType=INTEGER},
+      </if>
+      <if test="mainImage != null">
+        main_image = #{mainImage,jdbcType=VARCHAR},
+      </if>
+      <if test="specification != null">
+        specification = #{specification,jdbcType=VARCHAR},
+      </if>
+      <if test="detail != null">
+        detail = #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.team6project.cavallo_mall.pojo.Product">
+    update product
+    set category_id = #{categoryId,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      subtitle = #{subtitle,jdbcType=VARCHAR},
+      quantity_sold = #{quantitySold,jdbcType=INTEGER},
+      main_image = #{mainImage,jdbcType=VARCHAR},
+      specification = #{specification,jdbcType=VARCHAR},
+      detail = #{detail,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      status = #{status,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByCategoryIdSet" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"></include>
+    from product
+    where status = 1
+    <if test="categoryIdSet.size() > 0">
+      and category_id in
+      <foreach collection="categoryIdSet" item="item" index="index" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </if>
+  </select>
+  <select id="selectByProductIdSet" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"></include>
+    from product
+    where 1 = 1
+    <if test="productIdSet.size() > 0">
+      and id in
+      <foreach collection="productIdSet" item="item" index="index" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </if>
+  </select>
+  <select id="findProductSalesQuantity" parameterType="java.lang.Integer" resultMap="ProductStatisticMap">
+    select
+    sum(quantity_sold),
+    name,
+    category_id
+    from product
+    where category_id = #{categoryId,jdbcType=INTEGER}
+    group by
+    name,
+    category_id
+  </select>
+  <select id="findProductSalesQuantityList" resultMap="ProductStatisticMap">
+    select
+    sum(quantity_sold),
+    name,
+    category_id
+    from product
+    group by
+    name,
+    category_id
+  </select>
+</mapper>
